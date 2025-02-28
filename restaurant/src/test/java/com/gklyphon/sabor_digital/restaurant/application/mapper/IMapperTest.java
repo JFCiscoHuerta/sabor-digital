@@ -1,6 +1,10 @@
 package com.gklyphon.sabor_digital.restaurant.application.mapper;
 
+import com.gklyphon.sabor_digital.restaurant.application.dtos.MenuDto;
+import com.gklyphon.sabor_digital.restaurant.application.dtos.MenuItemDto;
 import com.gklyphon.sabor_digital.restaurant.application.dtos.RestaurantDto;
+import com.gklyphon.sabor_digital.restaurant.domain.entities.Menu;
+import com.gklyphon.sabor_digital.restaurant.domain.entities.MenuItem;
 import com.gklyphon.sabor_digital.restaurant.domain.entities.Restaurant;
 import com.gklyphon.sabor_digital.restaurant.utils.TestData;
 import org.junit.jupiter.api.Test;
@@ -40,6 +44,22 @@ class IMapperTest {
         assertEquals(TestData.RESTAURANT_DTO.getPhone(), entity.getPhone());
         assertEquals(TestData.RESTAURANT_DTO.getWebsite(), entity.getWebsite());
         assertEquals(TestData.RESTAURANT_DTO.getLogo(), entity.getLogo());
+    }
+
+    @Test
+    void fromMenuDtoToMenu_shouldMapCorrectly() {
+        when(mapper.fromMenuDtoToMenu(any(MenuDto.class))).thenReturn(TestData.MENU);
+        Menu menu = mapper.fromMenuDtoToMenu(TestData.MENU_DTO);
+        assertNotNull(menu);
+        assertEquals(TestData.MENU_DTO.getName(), menu.getName());
+    }
+
+    @Test
+    void fromMenuItemDtoToMenuItem_shouldMapCorrectly() {
+        when(mapper.fromMenuItemDtoToMenuItem(any(MenuItemDto.class))).thenReturn(TestData.MENU_ITEM);
+        MenuItem menuItem = mapper.fromMenuItemDtoToMenuItem(TestData.MENU_ITEM_DTO);
+        assertNotNull(menuItem);
+        assertEquals(TestData.MENU_ITEM_DTO.getName(), menuItem.getName());
     }
 
 }
