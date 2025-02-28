@@ -18,6 +18,7 @@
 
   <modules>
     <module>restaurant</module>
+    <module>waiter</module>
   </modules>
 
 </project>
