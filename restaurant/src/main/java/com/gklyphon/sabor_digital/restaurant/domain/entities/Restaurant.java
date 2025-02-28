@@ -1,6 +1,9 @@
 package com.gklyphon.sabor_digital.restaurant.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "restaurants")
@@ -14,17 +17,21 @@ public class Restaurant extends Auditable {
     private String phone;
     private String website;
     private String logo;
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Menu> menus;
 
     public Restaurant() {
     }
 
-    public Restaurant(Long id, String name, String address, String phone, String website, String logo) {
+    public Restaurant(Long id, String name, String address, String phone, String website, String logo, List<Menu> menus) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.website = website;
         this.logo = logo;
+        this.menus = menus;
     }
 
     public Long getId() {
@@ -75,6 +82,14 @@ public class Restaurant extends Auditable {
         this.logo = logo;
     }
 
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
+
     public Restaurant(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
@@ -82,6 +97,7 @@ public class Restaurant extends Auditable {
         this.phone = builder.phone;
         this.website = builder.website;
         this.logo = builder.logo;
+        this.menus = builder.menus;
     }
 
     public static class Builder {
@@ -91,6 +107,7 @@ public class Restaurant extends Auditable {
         private String phone;
         private String website;
         private String logo;
+        private List<Menu> menus;
 
         public Builder id(Long id) {
             this.id = id;
@@ -119,6 +136,11 @@ public class Restaurant extends Auditable {
 
         public Builder logo(String logo) {
             this.logo = logo;
+            return this;
+        }
+
+        public Builder menus(List<Menu> menus) {
+            this.menus = menus;
             return this;
         }
 
