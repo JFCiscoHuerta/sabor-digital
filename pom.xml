@@ -19,6 +19,7 @@
   <modules>
     <module>restaurant</module>
     <module>waiter</module>
+    <module>order</module>
   </modules>
 
 </project>
