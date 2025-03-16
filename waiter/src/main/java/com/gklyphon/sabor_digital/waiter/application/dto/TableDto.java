@@ -1,4 +1,4 @@
-package com.gklyphon.sabor_digital.table.application.dtos;
+package com.gklyphon.sabor_digital.waiter.application.dto;
 
 import java.util.List;
 
