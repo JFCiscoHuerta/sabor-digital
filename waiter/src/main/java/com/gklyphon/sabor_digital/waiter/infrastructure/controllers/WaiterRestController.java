@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/waiters")
 public class WaiterRestController {
@@ -69,6 +71,11 @@ public class WaiterRestController {
             @PathVariable Long id) {
         waiterService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/by-ids")
+    public ResponseEntity<?> getWaitersByIds(@RequestParam List<Long> ids) {
+        return ResponseEntity.ok(waiterService.findByIdIn(ids));
     }
 
     private PagedModel<EntityModel<Waiter>> buildPagedModel(Page<Waiter> page) {

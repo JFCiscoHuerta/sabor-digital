@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/tables")
 public class TableRestController {
@@ -54,6 +56,11 @@ public class TableRestController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         tableService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/by-ids")
+    public ResponseEntity<?> getByIds(@RequestParam List<Long> ids) {
+        return ResponseEntity.ok(tableService.findByIdIn(ids));
     }
 
     public PagedModel<EntityModel<Table>> buildPagedModel(Page<Table> page) {
