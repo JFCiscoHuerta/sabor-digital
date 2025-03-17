@@ -18,8 +18,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
+/**
+ * Service implementation for managing orders, providing CRUD operations.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/16
+ */
 @Service
 public class OrderServiceImpl implements IOrderService {
 
@@ -30,6 +35,15 @@ public class OrderServiceImpl implements IOrderService {
     private final ITableClient tableClient;
     private final IWaiterClient waiterClient;
 
+    /**
+     * Constructs an OrderServiceImpl with the necessary dependencies
+     *
+     * @param orderRepository the repository for order data persistence
+     * @param mapper the mapper for converting between DTOs and entities
+     * @param restaurantClient client for fetching restaurant data
+     * @param tableClient client for fetching table data
+     * @param waiterClient client for fetching waiter data
+     */
     public OrderServiceImpl(IOrderRepository orderRepository, IMapper mapper, IRestaurantClient restaurantClient, ITableClient tableClient, IWaiterClient waiterClient) {
         this.orderRepository = orderRepository;
         this.mapper = mapper;
@@ -38,12 +52,26 @@ public class OrderServiceImpl implements IOrderService {
         this.waiterClient = waiterClient;
     }
 
+    /**
+     * Retrieves all orders for a given restaurant ID with pagination.
+     *
+     * @param restaurantId the ID of the restaurant
+     * @param pageable the pagination information
+     * @return a page of orders
+     */
     @Override
     @Transactional(readOnly = true)
     public Page<Order> findAllByRestaurantId(Long restaurantId, Pageable pageable) {
         return orderRepository.findAllByRestaurantId(restaurantId, pageable);
     }
 
+    /**
+     * Retrieves an order by its ID.
+     *
+     * @param id the ID of the entity
+     * @return the found order
+     * @throws ElementNotFoundException if no order is found with the given ID
+     */
     @Override
     @Transactional(readOnly = true)
     public Order findById(Long id) {
@@ -51,6 +79,13 @@ public class OrderServiceImpl implements IOrderService {
                 .orElseThrow(() -> new ElementNotFoundException("Order not found"));
     }
 
+    /**
+     * Saves a new order.
+     *
+     * @param orderDto the DTO representing the new entity
+     * @return the saved order
+     * @throws ServiceException if an error occurs during the save process
+     */
     @Override
     @Transactional
     public Order save(OrderDto orderDto) {
@@ -62,6 +97,14 @@ public class OrderServiceImpl implements IOrderService {
         }
     }
 
+    /**
+     * Updates an existent order by its ID.
+     *
+     * @param id the ID of the entity to update
+     * @param orderDto the DTO containing the updated data
+     * @return the updated order
+     * @throws ServiceException if an error occurs during the update process.
+     */
     @Override
     @Transactional
     public Order update(Long id, OrderDto orderDto) {
@@ -75,6 +118,12 @@ public class OrderServiceImpl implements IOrderService {
         }
     }
 
+    /**
+     * Deletes an order by its ID.
+     *
+     * @param id the id of the entity to delete
+     * @throws ServiceException if an error occurs during the deletion process.
+     */
     @Override
     @Transactional
     public void deleteById(Long id) {
@@ -86,6 +135,13 @@ public class OrderServiceImpl implements IOrderService {
         }
     }
 
+    /**
+     * Verifies the existence of restaurant, table & waiter associated with the order.
+     *
+     * @param orderDto
+     * @throws ElementNotFoundException if any of the associated entities are not found
+     * @throws ServiceException if an error occurs during the verification process
+     */
     @Transactional(readOnly = true)
     void verifyClientResponses(OrderDto orderDto) {
         try {

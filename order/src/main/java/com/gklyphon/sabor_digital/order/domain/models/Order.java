@@ -8,28 +8,85 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Entity representing an order in the system. Contains details about the order,
+ * such as the items, associated restaurant, waiter, price, and status.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/16
+ */
 @Entity
 @Table(name = "orders")
 public class Order extends Auditable {
 
+    /**
+     * Unique identifier for the order.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * List of item IDs included in the order.
+     */
     private List<Long> itemsId;
+
+    /**
+     * Identifier of the restaurant associated with the order.
+     */
     private Long restaurantId;
+
+    /**
+     * Identifier of the waiter handling the order.
+     */
     private Long waiterId;
+
+    /**
+     * Total price of the order.
+     */
     private BigDecimal price;
+
+    /**
+     * Identifier of the table where the order was placed.
+     */
     private Long tableId;
+
+    /**
+     * Identifier of the table where the order was placed.
+     */
     @Enumerated(value = EnumType.STRING)
     private OrderType orderType;
+
+    /**
+     * The payment type used for the order (e.g., cash, credit).
+     */
     @Enumerated(value = EnumType.STRING)
     private PaymentType paymentType;
+
+    /**
+     * The current status of the order.
+     */
     @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
 
+    /**
+     * Default constructor.
+     */
     public Order() {
     }
 
+    /**
+     * Parameterized constructor for creating an order instance.
+     * @param id
+     * @param itemsId
+     * @param restaurantId
+     * @param waiterId
+     * @param price
+     * @param tableId
+     * @param orderType
+     * @param paymentType
+     * @param orderStatus
+     */
     public Order(Long id, List<Long> itemsId, Long restaurantId, Long waiterId, BigDecimal price, Long tableId, OrderType orderType, PaymentType paymentType, OrderStatus orderStatus) {
         this.id = id;
         this.itemsId = itemsId;
@@ -114,6 +171,10 @@ public class Order extends Auditable {
         this.orderStatus = orderStatus;
     }
 
+    /**
+     * Parameterized builder constructor
+     * @param builder
+     */
     public Order(Builder builder) {
         this.id = builder.id;
         this.itemsId = builder.itemsId;
@@ -126,6 +187,9 @@ public class Order extends Auditable {
         this.orderStatus = builder.orderStatus;
     }
 
+    /**
+     * Builder class for constructing Order instances.
+     */
     public static class Builder {
         private Long id;
         private List<Long> itemsId;
@@ -182,6 +246,10 @@ public class Order extends Auditable {
             return this;
         }
 
+        /**
+         * Builds the order instance
+         * @return the constructed Order object
+         */
         public Order build() {
             return new Order(this);
         }
