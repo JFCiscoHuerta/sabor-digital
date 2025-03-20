@@ -13,23 +13,49 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Implementation of {@link IMenuItemService} that provides CRUD operations for menu items.
+ * This service interacts with the {@link IMenuItemRepository} to manage menu item data.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/19
+ */
 @Service
 public class MenuItemServiceImpl implements IMenuItemService {
 
     private final IMenuItemRepository menuItemRepository;
     private final IMapper mapper;
 
+    /**
+     * Constructs a new {@code MenuItemServiceImpl} with the specified repository and mapper.
+     *
+     * @param menuItemRepository The repository for managing menu item persistence.
+     * @param mapper The mapper for converting between DTOs and entities.
+     */
     public MenuItemServiceImpl(IMenuItemRepository menuItemRepository, IMapper mapper) {
         this.menuItemRepository = menuItemRepository;
         this.mapper = mapper;
     }
 
+    /**
+     * Retrieves a paginated list of menu items.
+     *
+     * @param pageable The pagination information.
+     * @return A {@link Page} containing {@link MenuItem} entities.
+     */
     @Override
     @Transactional(readOnly = true)
     public Page<MenuItem> findAll(Pageable pageable) {
         return menuItemRepository.findAll(pageable);
     }
 
+    /**
+     * Finds a menu item by its unique identifier.
+     *
+     * @param id The unique identifier of the menu item.
+     * @return The found {@link MenuItem} entity.
+     * @throws ElementNotFoundException If no menu item is found with the given ID.
+     */
     @Override
     @Transactional(readOnly = true)
     public MenuItem findById(Long id) {
@@ -37,6 +63,13 @@ public class MenuItemServiceImpl implements IMenuItemService {
                 .orElseThrow(() -> new ElementNotFoundException("Element with id not found."));
     }
 
+    /**
+     * Saves a new menu item entity based on the provided DTO.
+     *
+     * @param menuItemDto The DTO containing menu item details.
+     * @return The saved {@link MenuItem} entity.
+     * @throws ServiceException If an error occurs during the saving process.
+     */
     @Override
     @Transactional
     public MenuItem save(MenuItemDto menuItemDto) {
@@ -48,6 +81,15 @@ public class MenuItemServiceImpl implements IMenuItemService {
         }
     }
 
+    /**
+     * Updates an existing menu item entity with the provided DTO.
+     *
+     * @param id The unique identifier of the menu item to update.
+     * @param menuItemDto The DTO containing updated menu item details.
+     * @return The updated {@link MenuItem} entity.
+     * @throws ElementNotFoundException If no menu item is found with the given ID.
+     * @throws ServiceException If an error occurs during the update process.
+     */
     @Override
     @Transactional
     public MenuItem update(Long id, MenuItemDto menuItemDto) {
@@ -60,6 +102,13 @@ public class MenuItemServiceImpl implements IMenuItemService {
         }
     }
 
+    /**
+     * Deletes a menu item entity by its unique identifier.
+     *
+     * @param id The unique identifier of the menu item to delete.
+     * @throws ElementNotFoundException If no menu item is found with the given ID.
+     * @throws ServiceException If an error occurs during the deletion process.
+     */
     @Override
     @Transactional
     public void deleteById(Long id) {

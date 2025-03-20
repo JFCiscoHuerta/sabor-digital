@@ -1,10 +1,13 @@
 package com.gklyphon.sabor_digital.restaurant.application.dtos;
 
-import com.gklyphon.sabor_digital.restaurant.domain.entities.Menu;
-import jakarta.persistence.JoinColumn;
-
 import java.math.BigDecimal;
 
+/**
+ * Data Transfer Object (DTO) for MenuItem.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/19
+ */
 public class MenuItemDto {
 
     private String name;
@@ -12,9 +15,20 @@ public class MenuItemDto {
     private int preparationTime;
     private Long menuId;
 
+    /**
+     * Default constructor.
+     */
     public MenuItemDto() {
     }
 
+    /**
+     * Constructs a new {@code MenuItemDto} with the specified attributes.
+     *
+     * @param name            The name of the menu item.
+     * @param price           The price of the menu item.
+     * @param preparationTime The preparation time required for the menu item (in minutes).
+     * @param menuId          The ID of the menu to which this item belongs.
+     */
     public MenuItemDto(String name, BigDecimal price, int preparationTime, Long menuId) {
         this.name = name;
         this.price = price;

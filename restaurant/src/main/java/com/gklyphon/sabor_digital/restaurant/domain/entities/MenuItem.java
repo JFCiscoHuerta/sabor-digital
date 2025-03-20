@@ -5,6 +5,14 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * Entity representing an item in a menu.
+ * A {@code MenuItem} belongs to a {@link Menu} and contains details such as name, price, and preparation time.
+ * It also extends {@link Auditable} to include automatic auditing fields.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/19
+ */
 @Entity
 @Table(name = "menu_items")
 public class MenuItem extends Auditable implements Serializable {
@@ -18,9 +26,21 @@ public class MenuItem extends Auditable implements Serializable {
     @ManyToOne
     private Menu menu;
 
+    /**
+     * Default constructor.
+     */
     public MenuItem() {
     }
 
+    /**
+     * Constructs a new {@code MenuItem} instance with the given parameters.
+     *
+     * @param id The unique identifier of the menu item.
+     * @param name The name of the menu item.
+     * @param price The price of the menu item.
+     * @param preparationTime The preparation time in minutes.
+     * @param menu The menu to which this item belongs.
+     */
     public MenuItem(Long id, String name, BigDecimal price, int preparationTime, Menu menu) {
         this.id = id;
         this.name = name;
