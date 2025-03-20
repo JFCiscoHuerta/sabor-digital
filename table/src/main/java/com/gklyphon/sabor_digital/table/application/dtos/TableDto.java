@@ -2,15 +2,31 @@ package com.gklyphon.sabor_digital.table.application.dtos;
 
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) for representing a table in a restaurant.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/20
+ */
 public class TableDto {
 
     private Long restaurantId;
     private String tableIdentifier;
     private List<Long> waitersId;
 
+    /**
+     * Default constructor.
+     */
     public TableDto() {
     }
 
+    /**
+     * Parameterized constructor for creating a TableDto object.
+     *
+     * @param restaurantId     The ID of the restaurant to which the table belongs.
+     * @param tableIdentifier  A unique identifier for the table.
+     * @param waitersId        A list of waiter IDs assigned to the table.
+     */
     public TableDto(Long restaurantId, String tableIdentifier, List<Long> waitersId) {
         this.restaurantId = restaurantId;
         this.tableIdentifier = tableIdentifier;
