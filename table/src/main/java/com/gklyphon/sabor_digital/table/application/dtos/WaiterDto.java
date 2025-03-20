@@ -2,6 +2,13 @@ package com.gklyphon.sabor_digital.table.application.dtos;
 
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) for representing a waiter.
+ * Used to transfer waiter-related data between layers.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/20
+ */
 public class WaiterDto {
 
     private String firstname;
@@ -11,9 +18,22 @@ public class WaiterDto {
     private List<Long> tablesId;
     private Long restaurantId;
 
+    /**
+     * Default constructor.
+     */
     public WaiterDto() {
     }
 
+    /**
+     * Parameterized constructor for creating a WaiterDto object.
+     *
+     * @param firstname    The first name of the waiter.
+     * @param lastname     The last name of the waiter.
+     * @param phone        The phone number of the waiter.
+     * @param email        The email address of the waiter.
+     * @param tablesId     A list of table IDs assigned to the waiter.
+     * @param restaurantId The ID of the restaurant where the waiter works.
+     */
     public WaiterDto(String firstname, String lastname, String phone, String email, List<Long> tablesId, Long restaurantId) {
         this.firstname = firstname;
         this.lastname = lastname;

@@ -7,6 +7,15 @@ import jakarta.persistence.Id;
 
 import java.util.List;
 
+
+/**
+ * Entity representing a restaurant table.
+ * Extends {@link Auditable} to track creation and update timestamps.
+ * Each table is associated with a restaurant and can have multiple assigned waiters.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/20
+ */
 @Entity
 @jakarta.persistence.Table(name = "tables")
 public class Table extends Auditable {
@@ -18,9 +27,20 @@ public class Table extends Auditable {
     private String tableIdentifier;
     private List<Long> waitersId;
 
+    /**
+     * Default constructor.
+     */
     public Table() {
     }
 
+    /**
+     * Parameterized constructor for creating a table entity.
+     *
+     * @param id The unique identifier of the table.
+     * @param restaurantId The ID of the restaurant this table belongs to.
+     * @param tableIdentifier A unique identifier for the table.
+     * @param waitersId A list of waiter IDs assigned to this table.
+     */
     public Table(Long id,Long restaurantId, String tableIdentifier, List<Long> waitersId) {
         this.id = id;
         this.restaurantId = restaurantId;

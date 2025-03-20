@@ -5,6 +5,14 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+/**
+ * Entity representing a restaurant.
+ * A restaurant can have multiple {@link Menu} instances associated with it.
+ * It also extends {@link Auditable} to include automatic auditing fields.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/19
+ */
 @Entity
 @Table(name = "restaurants")
 public class Restaurant extends Auditable {
@@ -21,9 +29,23 @@ public class Restaurant extends Auditable {
     @JsonIgnore
     private List<Menu> menus;
 
+    /**
+     * Default constructor.
+     */
     public Restaurant() {
     }
 
+    /**
+     * Constructs a new {@code Restaurant} instance with the given parameters.
+     *
+     * @param id The unique identifier of the restaurant.
+     * @param name The name of the restaurant.
+     * @param address The address of the restaurant.
+     * @param phone The contact phone number.
+     * @param website The website URL.
+     * @param logo The logo image URL or path.
+     * @param menus The list of menus associated with this restaurant.
+     */
     public Restaurant(Long id, String name, String address, String phone, String website, String logo, List<Menu> menus) {
         this.id = id;
         this.name = name;

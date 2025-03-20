@@ -1,19 +1,47 @@
 package com.gklyphon.sabor_digital.waiter.application.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) for Waiter information.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/20
+ */
 public class WaiterDto {
 
+    @NotEmpty
     private String firstname;
+    @NotEmpty
     private String lastname;
+    @NotEmpty
     private String phone;
+    @Email
     private String email;
     private List<Long> tablesId;
+    @NotNull
     private Long restaurantId;
 
+    /**
+     * Default constructor.
+     */
     public WaiterDto() {
     }
 
+    /**
+     * Parameterized constructor for creating a WaiterDto.
+     *
+     * @param firstname   The first name of the waiter.
+     * @param lastname    The last name of the waiter.
+     * @param phone       The phone number of the waiter.
+     * @param email       The email address of the waiter.
+     * @param tablesId    List of table IDs assigned to the waiter.
+     * @param restaurantId The ID of the restaurant where the waiter works.
+     */
     public WaiterDto(String firstname, String lastname, String phone, String email, List<Long> tablesId, Long restaurantId) {
         this.firstname = firstname;
         this.lastname = lastname;

@@ -1,4 +1,4 @@
-package com.gklyphon.sabor_digital.restaurant.domain.entities;
+package com.gklyphon.sabor_digital.waiter.domain.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Entities that extend this class will automatically have `createdAt` and `updatedAt` timestamps managed.
  *
  * @author JFCiscoHuerta
- * @date 2025/03/19
+ * @date 2025/03/20
  */
 @MappedSuperclass
 public class Auditable {
@@ -39,5 +39,21 @@ public class Auditable {
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

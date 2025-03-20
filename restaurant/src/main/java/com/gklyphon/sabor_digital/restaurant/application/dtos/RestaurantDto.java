@@ -1,16 +1,46 @@
 package com.gklyphon.sabor_digital.restaurant.application.dtos;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+/**
+ * Data Transfer Object (DTO) for Restaurant.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/19
+ */
 public class RestaurantDto {
 
+    @NotEmpty(message = "The name cannot be empty.")
+    @Size(max = 100, message = "The name must not exceed 100 characters.")
     private String name;
+
+    @NotEmpty(message = "The address cannot be empty.")
+    @Size(max = 255, message = "The address must not exceed 255 characters.")
     private String address;
+
+    @NotEmpty(message = "The phone number cannot be empty.")
+    @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Invalid phone number format.")
     private String phone;
     private String website;
     private String logo;
 
+    /**
+     * Default constructor.
+     */
     public RestaurantDto() {
     }
 
+    /**
+     * Constructs a new {@code RestaurantDto} with the specified attributes.
+     *
+     * @param name     The name of the restaurant.
+     * @param address  The address of the restaurant.
+     * @param phone    The contact phone number of the restaurant.
+     * @param website  The website URL of the restaurant.
+     * @param logo     The logo URL or image reference of the restaurant.
+     */
     public RestaurantDto(String name, String address, String phone, String website, String logo) {
         this.name = name;
         this.address = address;

@@ -3,18 +3,29 @@ package com.gklyphon.sabor_digital.order.application.dtos;
 import com.gklyphon.sabor_digital.order.domain.models.enums.OrderStatus;
 import com.gklyphon.sabor_digital.order.domain.models.enums.OrderType;
 import com.gklyphon.sabor_digital.order.domain.models.enums.PaymentType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderDto {
 
+    @Size(min = 1, message = "At least one item is required")
     private List<Long> itemsId;
+    @NotNull(message = "Restaurant ID is required")
     private Long restaurantId;
+    @NotNull(message = "Waiter ID is required")
     private Long waiterId;
+    @NotNull(message = "Price is required")
+    @PositiveOrZero(message = "Price must be greater or equal than zero")
     private BigDecimal price;
     private Long tableId;
+    @NotNull(message = "Order type is required")
     private OrderType orderType;
+    @NotNull(message = "Payment type is required")
     private PaymentType paymentType;
     private OrderStatus orderStatus;
 

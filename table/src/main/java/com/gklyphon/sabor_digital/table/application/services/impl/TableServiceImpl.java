@@ -19,6 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Service implementation for managing tables.
+ * Provides CRUD operations and additional business logic related to tables.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/20
+ */
 @Service
 public class TableServiceImpl implements ITableService {
 
@@ -27,6 +34,14 @@ public class TableServiceImpl implements ITableService {
     private final IWaiterClient waiterClient;
     private final IRestaurantClient restaurantClient;
 
+    /**
+     * Constructs a new {@code TableServiceImpl} with the required dependencies.
+     *
+     * @param tableRepository Repository for table entity operations.
+     * @param iMapper Mapper for converting between DTOs and entities.
+     * @param waiterClient Feign client for retrieving waiter information.
+     * @param restaurantClient Feign client for retrieving restaurant information.
+     */
     public TableServiceImpl(ITableRepository tableRepository, IMapper iMapper, IWaiterClient waiterClient, IRestaurantClient restaurantClient) {
         this.tableRepository = tableRepository;
         this.iMapper = iMapper;
@@ -34,12 +49,26 @@ public class TableServiceImpl implements ITableService {
         this.restaurantClient = restaurantClient;
     }
 
+    /**
+     * Retrieves a paginated list of tables for a specific restaurant.
+     *
+     * @param restaurantId The ID of the restaurant.
+     * @param pageable Pagination information.
+     * @return A paginated list of tables.
+     */
     @Override
     @Transactional(readOnly = true)
     public Page<Table> findAllByRestaurantId(Long restaurantId, Pageable pageable) {
         return tableRepository.findAllByRestaurantId(restaurantId, pageable);
     }
 
+    /**
+     * Retrieves a table by its ID.
+     *
+     * @param id The ID of the table.
+     * @return The found table.
+     * @throws ElementNotFoundException if the table is not found.
+     */
     @Override
     @Transactional(readOnly = true)
     public Table findById(Long id) {
@@ -47,6 +76,13 @@ public class TableServiceImpl implements ITableService {
                 .orElseThrow(() -> new ElementNotFoundException("Table not found."));
     }
 
+    /**
+     * Saves a new table.
+     *
+     * @param tableDto The DTO containing table data.
+     * @return The created table.
+     * @throws ServiceException if an error occurs while saving.
+     */
     @Override
     @Transactional
     public Table save(TableDto tableDto) {
@@ -58,6 +94,14 @@ public class TableServiceImpl implements ITableService {
         }
     }
 
+    /**
+     * Updates an existing table.
+     *
+     * @param id The ID of the table to update.
+     * @param tableDto The DTO containing updated table data.
+     * @return The updated table.
+     * @throws ServiceException if an error occurs while updating.
+     */
     @Override
     @Transactional
     public Table update(Long id, TableDto tableDto) {
@@ -71,6 +115,12 @@ public class TableServiceImpl implements ITableService {
         }
     }
 
+    /**
+     * Deletes a table by its ID.
+     *
+     * @param id The ID of the table to delete.
+     * @throws ServiceException if an error occurs while deleting.
+     */
     @Override
     @Transactional
     public void deleteById(Long id) {
@@ -82,6 +132,13 @@ public class TableServiceImpl implements ITableService {
         }
     }
 
+    /**
+     * Retrieves a list of tables by their IDs.
+     *
+     * @param ids The list of table IDs.
+     * @return A list of tables.
+     * @throws ElementNotFoundException if no tables are found for the provided IDs.
+     */
     @Override
     @Transactional(readOnly = true)
     public List<Table> findByIdIn(List<Long> ids) {
@@ -100,11 +157,16 @@ public class TableServiceImpl implements ITableService {
         if (!missingIds.isEmpty()) {
             throw new ElementNotFoundException("No tables were found for the provided IDs.");
         }
-
         return tables;
-
     }
 
+    /**
+     * Verifies if the given table DTO has valid restaurant and waiter IDs.
+     *
+     * @param tableDto The table DTO to verify.
+     * @throws ElementNotFoundException if the restaurant or waiters do not exist.
+     * @throws ServiceException if an error occurs while fetching data.
+     */
     @Transactional(readOnly = true)
     void verifyClientResponses(TableDto tableDto) {
         try {

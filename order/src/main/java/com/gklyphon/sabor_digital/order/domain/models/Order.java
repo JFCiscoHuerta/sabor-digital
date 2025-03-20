@@ -4,7 +4,6 @@ import com.gklyphon.sabor_digital.order.domain.models.enums.OrderStatus;
 import com.gklyphon.sabor_digital.order.domain.models.enums.OrderType;
 import com.gklyphon.sabor_digital.order.domain.models.enums.PaymentType;
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -29,6 +28,9 @@ public class Order extends Auditable {
     /**
      * List of item IDs included in the order.
      */
+    @ElementCollection
+    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
+    @Column(name = "item_id")
     private List<Long> itemsId;
 
     /**

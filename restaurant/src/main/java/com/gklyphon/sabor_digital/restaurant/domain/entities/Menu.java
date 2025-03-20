@@ -1,12 +1,19 @@
 package com.gklyphon.sabor_digital.restaurant.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Entity representing a menu in a restaurant.
+ * A menu consists of multiple {@link MenuItem} elements and belongs to a {@link Restaurant}.
+ * It also extends {@link Auditable} to include automatic auditing fields.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/19
+ */
 @Entity
 @Table(name = "menus")
 public class Menu extends Auditable implements Serializable {
@@ -16,15 +23,28 @@ public class Menu extends Auditable implements Serializable {
     private Long id;
 
     private String name;
+
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     private List<MenuItem> menuItems;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Restaurant restaurant;
 
+    /**
+     * Default constructor.
+     */
     public Menu() {
     }
 
+    /**
+     * Constructs a new {@code Menu} instance with the given parameters.
+     *
+     * @param id The unique identifier of the menu.
+     * @param name The name of the menu.
+     * @param menuItems The list of menu items in this menu.
+     * @param restaurant The restaurant that owns this menu.
+     */
     public Menu(Long id, String name, List<MenuItem> menuItems, Restaurant restaurant) {
         this.id = id;
         this.name = name;
