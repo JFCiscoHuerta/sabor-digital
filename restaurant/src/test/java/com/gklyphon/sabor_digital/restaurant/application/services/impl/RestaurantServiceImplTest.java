@@ -2,7 +2,7 @@ package com.gklyphon.sabor_digital.restaurant.application.services.impl;
 
 import com.gklyphon.sabor_digital.restaurant.application.mapper.IMapper;
 import com.gklyphon.sabor_digital.restaurant.domain.entities.Restaurant;
-import com.gklyphon.sabor_digital.restaurant.domain.repositories.IRestaurantRepository;
+import com.gklyphon.sabor_digital.restaurant.infrastructure.repositories.IRestaurantRepository;
 import com.gklyphon.sabor_digital.restaurant.infrastructure.exception.exceptions.ElementNotFoundException;
 import com.gklyphon.sabor_digital.restaurant.utils.TestData;
 import org.hibernate.service.spi.ServiceException;

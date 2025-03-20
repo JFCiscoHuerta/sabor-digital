@@ -5,6 +5,8 @@ import com.gklyphon.sabor_digital.restaurant.domain.entities.MenuItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Service interface for managing menu item-related operations.
  * Extends {@link IService} with {@link MenuItem} as the entity type
@@ -22,4 +24,12 @@ public interface IMenuItemService extends IService<MenuItem, MenuItemDto> {
      * @return A {@link Page} containing a list of {@link MenuItem} objects.
      */
     Page<MenuItem> findAll(Pageable pageable);
+
+    /**
+     * Retrieves a list of menu items by their unique identifiers.
+     *
+     * @param ids List of menu item IDs to retrieve.
+     * @return List of {@link MenuItem} corresponding to the given IDs.
+     */
+    List<MenuItem> findByIdIn(List<Long> ids);
 }

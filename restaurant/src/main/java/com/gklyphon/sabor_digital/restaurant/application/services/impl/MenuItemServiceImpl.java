@@ -4,7 +4,7 @@ import com.gklyphon.sabor_digital.restaurant.application.dtos.MenuItemDto;
 import com.gklyphon.sabor_digital.restaurant.application.mapper.IMapper;
 import com.gklyphon.sabor_digital.restaurant.application.services.IMenuItemService;
 import com.gklyphon.sabor_digital.restaurant.domain.entities.MenuItem;
-import com.gklyphon.sabor_digital.restaurant.domain.repositories.IMenuItemRepository;
+import com.gklyphon.sabor_digital.restaurant.infrastructure.repositories.IMenuItemRepository;
 import com.gklyphon.sabor_digital.restaurant.infrastructure.exception.exceptions.ElementNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.BeanUtils;
@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Implementation of {@link IMenuItemService} that provides CRUD operations for menu items.
@@ -118,5 +120,30 @@ public class MenuItemServiceImpl implements IMenuItemService {
         } catch (Exception ex) {
             throw new ServiceException("", ex);
         }
+    }
+
+    /**
+     * Retrieves a list of menu items by their unique identifiers.
+     *
+     * @param ids List of menu item IDs to retrieve.
+     * @return List of {@link MenuItem} corresponding to the given IDs.
+     * @throws ElementNotFoundException If any of the provided IDs do not match existing menu items.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<MenuItem> findByIdIn(List<Long> ids) {
+        List<MenuItem> menuItems = menuItemRepository.findByIdIn(ids);
+        List<Long> foundIds = menuItems
+                .stream()
+                .map(MenuItem::getId)
+                .toList();
+        List<Long> missingIds = ids
+                .stream()
+                .filter(id -> !foundIds.contains(id))
+                .toList();
+        if (!missingIds.isEmpty()) {
+            throw new ElementNotFoundException("No menu items were found for the provided IDs.");
+        }
+        return menuItems;
     }
 }

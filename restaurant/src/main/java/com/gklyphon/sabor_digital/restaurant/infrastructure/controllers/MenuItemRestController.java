@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * REST Controller for managing menu items.
  * Provides CRUD operations.
@@ -132,6 +134,29 @@ public class MenuItemRestController {
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         menuItemService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Retrieves a list of menu items by their unique identifiers.
+     *
+     * @param ids List of menu item IDs to retrieve.
+     * @return A {@link ResponseEntity} containing a list of {@link MenuItem} objects.
+     *
+     * @author Your Name
+     * @date 2025-03-20
+     */
+    @Operation(
+            summary = "Get menu items by IDs",
+            description = "Retrieves a list of menu items based on the provided IDs."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of menu items retrieved successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request parameters"),
+            @ApiResponse(responseCode = "404", description = "Some menu items were not found")
+    })
+    @GetMapping("/by-ids")
+    public ResponseEntity<?> getByIds(@RequestParam(name = "ids") List<Long> ids) {
+        return ResponseEntity.ok(menuItemService.findByIdIn(ids));
     }
 
     /**
