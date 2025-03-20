@@ -4,7 +4,7 @@ import com.gklyphon.sabor_digital.restaurant.application.dtos.RestaurantDto;
 import com.gklyphon.sabor_digital.restaurant.application.mapper.IMapper;
 import com.gklyphon.sabor_digital.restaurant.application.services.IRestaurantService;
 import com.gklyphon.sabor_digital.restaurant.domain.entities.Restaurant;
-import com.gklyphon.sabor_digital.restaurant.domain.repositories.IRestaurantRepository;
+import com.gklyphon.sabor_digital.restaurant.infrastructure.repositories.IRestaurantRepository;
 import com.gklyphon.sabor_digital.restaurant.infrastructure.exception.exceptions.ElementNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.BeanUtils;

@@ -1,9 +1,6 @@
 package com.gklyphon.sabor_digital.order.application.services.impl;
 
-import com.gklyphon.sabor_digital.order.application.dtos.OrderDto;
-import com.gklyphon.sabor_digital.order.application.dtos.RestaurantDto;
-import com.gklyphon.sabor_digital.order.application.dtos.TableDto;
-import com.gklyphon.sabor_digital.order.application.dtos.WaiterDto;
+import com.gklyphon.sabor_digital.order.application.dtos.*;
 import com.gklyphon.sabor_digital.order.application.mapper.IMapper;
 import com.gklyphon.sabor_digital.order.application.services.IOrderService;
 import com.gklyphon.sabor_digital.order.domain.models.Order;
@@ -18,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Service implementation for managing orders, providing CRUD operations.
@@ -146,10 +145,11 @@ public class OrderServiceImpl implements IOrderService {
     void verifyClientResponses(OrderDto orderDto) {
         try {
             RestaurantDto restaurantDto = restaurantClient.getRestaurantById(orderDto.getRestaurantId());
+            List<MenuItemDto> menuItems = restaurantClient.getByIdIn(orderDto.getItemsId());
             TableDto tableDto = tableClient.getTableById(orderDto.getTableId());
             WaiterDto waiterDto = waiterClient.getWaiterById(orderDto.getWaiterId());
 
-            if (restaurantDto == null || tableDto == null || waiterDto == null) {
+            if ( (!orderDto.getItemsId().isEmpty() && menuItems.isEmpty()) || restaurantDto == null || tableDto == null || waiterDto == null) {
                 throw new ElementNotFoundException("Invalid restaurant, table, or waiter ID");
             }
         } catch (Exception ex) {
