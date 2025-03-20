@@ -1,4 +1,4 @@
-package com.gklyphon.sabor_digital.restaurant.domain.repositories;
+package com.gklyphon.sabor_digital.restaurant.infrastructure.repositories;
 
 import com.gklyphon.sabor_digital.restaurant.domain.entities.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
