@@ -4,6 +4,13 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+/**
+ * Entity representing a Waiter.
+ * Each waiter is associated with a restaurant and can be assigned to multiple tables.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/20
+ */
 @Entity
 @Table(name = "waiters")
 public class Waiter {
@@ -15,12 +22,29 @@ public class Waiter {
     private String lastname;
     private String phone;
     private String email;
+    @ElementCollection
+    @CollectionTable(name = "waiter_tables", joinColumns = @JoinColumn(name = "waiter_id"))
+    @Column(name = "table_id")
     private List<Long> tablesId;
     private Long restaurantId;
 
+    /**
+     * Default constructor
+     */
     public Waiter() {
     }
 
+    /**
+     * Constructs a new Waiter with the given parameters.
+     *
+     * @param id          The ID of the waiter.
+     * @param firstname   The first name of the waiter.
+     * @param lastname    The last name of the waiter.
+     * @param phone       The phone number of the waiter.
+     * @param email       The email address of the waiter.
+     * @param tablesId    The list of table IDs assigned to the waiter.
+     * @param restaurantId The restaurant ID associated with the waiter.
+     */
     public Waiter(Long id, String firstname, String lastname, String phone, String email, List<Long> tablesId, Long restaurantId) {
         this.id = id;
         this.firstname = firstname;

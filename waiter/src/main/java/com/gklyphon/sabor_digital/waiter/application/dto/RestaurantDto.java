@@ -1,5 +1,11 @@
 package com.gklyphon.sabor_digital.waiter.application.dto;
 
+/**
+ * Data Transfer Object (DTO) for Restaurant information.
+ *
+ * @author JFCiscoHuerta
+ * @date 2025/03/20
+ */
 public class RestaurantDto {
 
     private String name;
@@ -8,9 +14,21 @@ public class RestaurantDto {
     private String website;
     private String logo;
 
+    /**
+     * Default constructor.
+     */
     public RestaurantDto() {
     }
 
+    /**
+     * Parameterized constructor for creating a RestaurantDto.
+     *
+     * @param name     The name of the restaurant.
+     * @param address  The address of the restaurant.
+     * @param phone    The phone number of the restaurant.
+     * @param website  The website URL of the restaurant.
+     * @param logo     The logo URL or Base64 string.
+     */
     public RestaurantDto(String name, String address, String phone, String website, String logo) {
         this.name = name;
         this.address = address;
