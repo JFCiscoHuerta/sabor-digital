@@ -1,5 +1,7 @@
 package com.gklyphon.sabor_digital.table.application.dtos;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,9 @@ import java.util.List;
  */
 public class TableDto {
 
+    @NotNull
     private Long restaurantId;
+    @NotNull
     private String tableIdentifier;
     private List<Long> waitersId;
 
