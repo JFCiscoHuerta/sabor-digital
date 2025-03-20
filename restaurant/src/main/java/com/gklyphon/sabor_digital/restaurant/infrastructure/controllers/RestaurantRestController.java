@@ -8,8 +8,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -64,7 +66,7 @@ public class RestaurantRestController {
             @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody RestaurantDto restaurantDto) {
+    public ResponseEntity<?> create(@Valid @RequestBody RestaurantDto restaurantDto, BindingResult result) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 restaurantService.save(restaurantDto));
     }
@@ -85,7 +87,7 @@ public class RestaurantRestController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @Parameter(description = "Restaurant ID", example = "1") @PathVariable(name = "id") Long id,
-            @RequestBody RestaurantDto restaurantDto) {
+            @Valid @RequestBody RestaurantDto restaurantDto, BindingResult result) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 restaurantService.update(id, restaurantDto));
     }

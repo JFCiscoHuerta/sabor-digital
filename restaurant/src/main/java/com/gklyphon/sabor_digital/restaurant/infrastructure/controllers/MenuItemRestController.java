@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -92,7 +94,7 @@ public class MenuItemRestController {
             @ApiResponse(responseCode = "400", description = "Invalid request body")
     })
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody MenuItemDto menuItemDto) {
+    public ResponseEntity<?> create(@Valid @RequestBody MenuItemDto menuItemDto, BindingResult result) {
         MenuItem menuItem = menuItemService.save(menuItemDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(menuItem);
     }
@@ -111,7 +113,7 @@ public class MenuItemRestController {
             @ApiResponse(responseCode = "400", description = "Invalid request body")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody MenuItemDto menuItemDto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody MenuItemDto menuItemDto, BindingResult result) {
         return ResponseEntity.ok(menuItemService.update(id, menuItemDto));
     }
 
