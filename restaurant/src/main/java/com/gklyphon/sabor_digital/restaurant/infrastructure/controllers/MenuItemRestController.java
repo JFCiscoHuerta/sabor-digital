@@ -3,6 +3,11 @@ package com.gklyphon.sabor_digital.restaurant.infrastructure.controllers;
 import com.gklyphon.sabor_digital.restaurant.application.dtos.MenuItemDto;
 import com.gklyphon.sabor_digital.restaurant.application.services.IMenuItemService;
 import com.gklyphon.sabor_digital.restaurant.domain.entities.MenuItem;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 /**
  * REST Controller for managing menu items.
  * Provides CRUD operations.
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * @author JFCiscoHuerta
  * @date 2025/03/19
  */
+@Tag(name = "Menu Items", description = "Endpoints for managing menu items")
 @RestController
 @RequestMapping("/api/menu-items")
 public class MenuItemRestController {
@@ -46,10 +51,15 @@ public class MenuItemRestController {
      * @param size Number of items per page (default: 10).
      * @return A paginated list of menu items wrapped in {@code PagedModel}.
      */
+    @Operation(summary = "Get All menu items", description = "Retrieves a paginated list of menu items.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of menu items retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid request parameters")
+    })
     @GetMapping
     public ResponseEntity<?> getAll(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
+            @Parameter(description = "Page number") @RequestParam(value = "page", defaultValue = "0") int page,
+            @Parameter(description = "Page size") @RequestParam(value = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(buildPagedModel(menuItemService.findAll(pageable)));
     }
@@ -60,8 +70,13 @@ public class MenuItemRestController {
      * @param id The ID of the menu item.
      * @return The found menu item.
      */
+    @Operation(summary = "Get a menu item by ID", description = "Retrieves a single menu item based on its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Menu item found"),
+            @ApiResponse(responseCode = "404", description = "Menu item not found")
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@Parameter(description = "Menu Item ID") @PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(menuItemService.findById(id));
     }
 
@@ -71,6 +86,11 @@ public class MenuItemRestController {
      * @param menuItemDto The DTO containing menu item data.
      * @return The created menu item.
      */
+    @Operation(summary = "Create a new menu item", description = "Adds a new menu item to the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Menu item created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request body")
+    })
     @PostMapping
     public ResponseEntity<?> create(@RequestBody MenuItemDto menuItemDto) {
         MenuItem menuItem = menuItemService.save(menuItemDto);
@@ -84,6 +104,12 @@ public class MenuItemRestController {
      * @param menuItemDto The DTO with updated menu item data.
      * @return The updated menu item.
      */
+    @Operation(summary = "Update a menu item", description = "Updates an existing menu item with new information.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Menu item updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Menu item not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid request body")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody MenuItemDto menuItemDto) {
         return ResponseEntity.ok(menuItemService.update(id, menuItemDto));
@@ -95,6 +121,11 @@ public class MenuItemRestController {
      * @param id The ID of the menu item to delete.
      * @return A {@code 204 No Content} response.
      */
+    @Operation(summary = "Delete a menu item", description = "Removes a menu item from the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Menu item deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Menu item not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         menuItemService.deleteById(id);

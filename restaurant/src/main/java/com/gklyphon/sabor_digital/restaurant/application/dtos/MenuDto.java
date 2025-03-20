@@ -2,6 +2,8 @@ package com.gklyphon.sabor_digital.restaurant.application.dtos;
 
 import com.gklyphon.sabor_digital.restaurant.domain.entities.MenuItem;
 import com.gklyphon.sabor_digital.restaurant.domain.entities.Restaurant;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -13,8 +15,12 @@ import java.util.List;
  */
 public class MenuDto {
 
+    @NotEmpty(message = "The name cannot be empty.")
     private String name;
+
     private List<MenuItem> menuItems;
+
+    @NotNull(message = "The restaurantId cannot be null.")
     private Long restaurantId;
 
     /**

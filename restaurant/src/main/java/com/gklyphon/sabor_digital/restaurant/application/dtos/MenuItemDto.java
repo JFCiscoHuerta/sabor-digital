@@ -1,5 +1,10 @@
 package com.gklyphon.sabor_digital.restaurant.application.dtos;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+
 import java.math.BigDecimal;
 
 /**
@@ -10,9 +15,17 @@ import java.math.BigDecimal;
  */
 public class MenuItemDto {
 
+    @NotEmpty(message = "The name cannot be empty.")
     private String name;
+
+    @NotNull(message = "The price cannot be null.")
+    @PositiveOrZero(message = "The price must be equal or greater than zero.")
     private BigDecimal price;
+
+    @Min(value = 1, message = "The preparation time must be at least 1 minute.")
     private int preparationTime;
+
+    @NotNull(message = "The menuId cannot be null.")
     private Long menuId;
 
     /**
