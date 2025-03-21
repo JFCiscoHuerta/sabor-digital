@@ -39,3 +39,4 @@ build/
 /.idea/
 /order/.env
 /restaurant/.env
+/waiter/.env
