@@ -40,3 +40,4 @@ build/
 /order/.env
 /restaurant/.env
 /waiter/.env
+/table/.env

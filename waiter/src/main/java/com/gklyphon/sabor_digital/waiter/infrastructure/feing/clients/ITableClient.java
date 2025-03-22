@@ -14,7 +14,7 @@ import java.util.List;
  * @author JFCiscoHuerta
  * @date 2025/03/20
  */
-@FeignClient(name = "table-service", url = "http://localhost:8083")
+@FeignClient(name = "table-service", url = "${table-service.url}")
 public interface ITableClient {
 
     /**

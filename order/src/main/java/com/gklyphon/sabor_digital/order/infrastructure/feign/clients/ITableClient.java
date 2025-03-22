@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author JFCiscoHuerta
  * @date 2025/03/16
  */
-@FeignClient(name = "table-service", url = "http://localhost:8083")
+@FeignClient(name = "table-service", url = "${table-service.url}")
 public interface ITableClient {
 
     /**
