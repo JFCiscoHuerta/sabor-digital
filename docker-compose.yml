@@ -1,0 +1,64 @@
+services:
+
+  restaurant-app:
+    container_name: restaurant-app
+    build:
+      context: ./
+      dockerfile: ./restaurant/Dockerfile
+    ports:
+      - "8082:8082"
+    env_file:
+      - ./restaurant/.env
+    restart: always
+    networks:
+      - sabor-digital
+
+  waiter-app:
+    container_name: waiter-app
+    build:
+      context: ./
+      dockerfile: ./waiter/Dockerfile
+    ports:
+      - "8084:8084"
+    env_file:
+      - ./waiter/.env
+    depends_on:
+      - restaurant-app
+    restart: always
+    networks:
+      - sabor-digital
+
+  table-app:
+    container_name: table-app
+    build:
+      context: ./
+      dockerfile: ./table/Dockerfile
+    ports:
+      - "8083:8083"
+    env_file: ./table/.env
+    depends_on:
+      - restaurant-app
+    restart: always
+    networks:
+      - sabor-digital
+
+  order-app:
+    container_name: order-app
+    build:
+      context: ./
+      dockerfile: ./order/Dockerfile
+    ports:
+      - "8081:8081"
+    env_file: ./order/.env
+    depends_on:
+      - restaurant-app
+      - waiter-app
+      - table-app
+    restart: always
+    networks:
+      - sabor-digital
+
+networks:
+  sabor-digital:
+    name: sabor-digital
+    driver: bridge
