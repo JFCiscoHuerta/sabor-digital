@@ -23,3 +23,7 @@ Ensure you have the following installed:
 | **Waiter Service** | Handles waiter assignments | `8084` |
 
 ---
+
+## License
+
+This project is licensed under the  Apache 2.0 license - see the LICENSE file for detail
