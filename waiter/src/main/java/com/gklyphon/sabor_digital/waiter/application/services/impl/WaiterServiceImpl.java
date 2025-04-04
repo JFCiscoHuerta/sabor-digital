@@ -60,7 +60,7 @@ public class WaiterServiceImpl implements IWaiterService {
     @Transactional(readOnly = true)
     public Waiter findById(Long id) {
         return waiterRepository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException("W"));
+                .orElseThrow(() -> new ElementNotFoundException("Waiter not found."));
     }
 
     /**
@@ -118,7 +118,7 @@ public class WaiterServiceImpl implements IWaiterService {
             BeanUtils.copyProperties(waiterDto, originalWaiter, "id");
             return waiterRepository.save(originalWaiter);
         } catch (Exception ex) {
-            throw new ServiceException("",ex);
+            throw new ServiceException("Error updating waiter",ex);
         }
     }
 
@@ -135,7 +135,7 @@ public class WaiterServiceImpl implements IWaiterService {
         try {
             waiterRepository.deleteById(id);
         } catch (Exception ex) {
-            throw new ServiceException("", ex);
+            throw new ServiceException("Error deleting waiter", ex);
         }
     }
 
