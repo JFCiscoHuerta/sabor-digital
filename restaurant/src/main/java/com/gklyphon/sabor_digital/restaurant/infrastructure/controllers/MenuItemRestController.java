@@ -142,8 +142,6 @@ public class MenuItemRestController {
      * @param ids List of menu item IDs to retrieve.
      * @return A {@link ResponseEntity} containing a list of {@link MenuItem} objects.
      *
-     * @author Your Name
-     * @date 2025-03-20
      */
     @Operation(
             summary = "Get menu items by IDs",
@@ -157,6 +155,32 @@ public class MenuItemRestController {
     @GetMapping("/by-ids")
     public ResponseEntity<?> getByIds(@RequestParam(name = "ids") List<Long> ids) {
         return ResponseEntity.ok(menuItemService.findByIdIn(ids));
+    }
+
+    /**
+     * Retrieves a paginated list of menu items by its menu.
+     *
+     * @param page Page number (default: 0).
+     * @param size Number of items per page (default: 10).
+     * @return A paginated list of menu items wrapped in {@code PagedModel}.
+     */
+    @Operation(
+            summary = "Get menu items by it menu ID",
+            description = "Retrieves a list of menu items based on the provided menu ID."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of menu items retrieved successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request parameters"),
+            @ApiResponse(responseCode = "404", description = "Restaurant was not found")
+    })
+    @GetMapping("/all-by-menu/{id}")
+    public ResponseEntity<?> getByMenu(
+            @PathVariable(name = "id") Long id,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+             @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(
+                buildPagedModel(menuItemService.findAllByMenuId(id, pageable)));
     }
 
     /**

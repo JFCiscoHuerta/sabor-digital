@@ -32,4 +32,12 @@ public interface IMenuItemService extends IService<MenuItem, MenuItemDto> {
      * @return List of {@link MenuItem} corresponding to the given IDs.
      */
     List<MenuItem> findByIdIn(List<Long> ids);
+
+    /**
+     * Retrieves a paginated list of menu items by the menu id.
+     *
+     * @param menuId The menu identifier
+     * @return A {@link Page} containing a list of {@link MenuItem} objects.
+     */
+    Page<MenuItem> findAllByMenuId(Long menuId, Pageable pageable);
 }
