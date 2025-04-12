@@ -15,7 +15,9 @@ import java.util.List;
 @Configuration
 public class RestaurantConfigSecurity {
 
-    private final String[] PUBLIC_ENDPOINTS = {"/api/restaurants","/api/restaurants/{id}", };
+    private final String[] PUBLIC_ENDPOINTS = {"/api/restaurants","/api/restaurants/{id}",
+            "/api/menu-items", "/api/menu-items/{id}", "/api/menu-items/{id}", "/api/menu-items/by-ids",
+            "/api/menu-items/all-by-menu/{id}"};
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
