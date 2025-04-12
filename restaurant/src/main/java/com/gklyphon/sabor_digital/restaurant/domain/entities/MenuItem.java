@@ -1,5 +1,6 @@
 package com.gklyphon.sabor_digital.restaurant.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class MenuItem extends Auditable implements Serializable {
     private String name;
     private BigDecimal price;
     private int preparationTime;
+    @JsonIgnore
     @ManyToOne
     private Menu menu;
 

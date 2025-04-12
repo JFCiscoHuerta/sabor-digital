@@ -79,7 +79,7 @@ public class MenuItemServiceImpl implements IMenuItemService {
             return menuItemRepository.save(
                     mapper.fromMenuItemDtoToMenuItem(menuItemDto));
         } catch (Exception ex) {
-            throw new ServiceException("", ex);
+            throw new ServiceException("Error saving menu item.", ex);
         }
     }
 
@@ -100,7 +100,7 @@ public class MenuItemServiceImpl implements IMenuItemService {
             BeanUtils.copyProperties(menuItemDto, originalMenuItem, "id");
             return menuItemRepository.save(originalMenuItem);
         } catch (Exception ex) {
-            throw new ServiceException("", ex);
+            throw new ServiceException("Error updating menu item.", ex);
         }
     }
 
@@ -118,7 +118,24 @@ public class MenuItemServiceImpl implements IMenuItemService {
         try {
             menuItemRepository.deleteById(id);
         } catch (Exception ex) {
-            throw new ServiceException("", ex);
+            throw new ServiceException("Error deleting menu item.", ex);
+        }
+    }
+
+    /**
+     * Retrieves a paginated list of menu items by its restaurant.
+     *
+     * @param id The restaurant identifier.
+     * @param pageable The pagination information.
+     * @return A {@link Page} containing {@link MenuItem} entities.
+     */
+    @Override
+    @Transactional
+    public Page<MenuItem> findAllByMenuId(Long id, Pageable pageable) {
+        try {
+            return menuItemRepository.findAllByMenuId(id, pageable);
+        } catch (Exception ex) {
+            throw new ServiceException("Error fetching menu items", ex);
         }
     }
 
