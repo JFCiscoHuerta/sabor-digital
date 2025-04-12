@@ -15,7 +15,8 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    private static String[] PUBLIC_ENDPOINTS = {"/api/tables", "/api/tables/{id}", "/api/tables/by-ids"};
+    private static String[] PUBLIC_ENDPOINTS = {"/api/tables", "/api/tables/{id}", "/api/tables/by-ids",
+            "/api/tables/all-by-restaurant/{id}"};
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
