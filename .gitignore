@@ -41,3 +41,4 @@ build/
 /restaurant/.env
 /waiter/.env
 /table/.env
+/.env
