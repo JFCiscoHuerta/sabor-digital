@@ -153,7 +153,7 @@ public class WaiterRestController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(
-            @Parameter(description = "Waiter ID", example = "0") @PathVariable(name = "ids") Long id) {
+            @Parameter(description = "Waiter ID", example = "0") @PathVariable Long id) {
         waiterService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
