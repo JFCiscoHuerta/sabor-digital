@@ -11,6 +11,7 @@ import java.util.Collection;
  * to include additional user information such as username and email.
  *
  * @author JFCiscoHuerta
+ * @date 2025/04/19
  */
 public class CustomJwt extends JwtAuthenticationToken {
 
